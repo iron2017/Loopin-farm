@@ -4,16 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sensor Dashboard</title>
-    <link rel="stylesheet" href="styles.css" />
-
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="dashboard" aria-live="polite">
     <section class="header">
       <h1>Farm Sensor Dashboard</h1>
       <div class="controls">
+        <div class="source-pill">Data Source: <strong id="sourceMode">Dummy</strong></div>
         <button id="toggleBtn" class="toggle on" type="button" aria-pressed="true">ON</button>
-        <div class="status" id="statusText"><span id="statusDot" class="dot running"></span>System running</div>
+        <div class="status" id="statusText">
+          <span id="statusDot" class="dot running"></span>
+          <span id="statusLabel">System running</span>
+        </div>
       </div>
     </section>
 
@@ -22,23 +25,65 @@
         <div class="card-head"><span>Soil Moisture</span><span class="icon" aria-hidden="true">🌱</span></div>
         <div id="moisture" class="value">--</div>
         <div class="subtle">Target range: 20%–80%</div>
+        <svg id="moistureChart" class="mini-chart" viewBox="0 0 160 46" role="img" aria-label="Soil moisture trend"></svg>
       </article>
 
       <article class="card">
         <div class="card-head"><span>Temperature</span><span class="icon" aria-hidden="true">🌡️</span></div>
         <div id="temperature" class="value">--</div>
         <div class="subtle">Target range: 15°C–35°C</div>
+        <svg id="temperatureChart" class="mini-chart" viewBox="0 0 160 46" role="img" aria-label="Temperature trend"></svg>
       </article>
 
       <article class="card">
         <div class="card-head"><span>Air Humidity</span><span class="icon" aria-hidden="true">💧</span></div>
         <div id="humidity" class="value">--</div>
         <div class="subtle">Target range: 30%–90%</div>
+        <svg id="humidityChart" class="mini-chart" viewBox="0 0 160 46" role="img" aria-label="Humidity trend"></svg>
       </article>
+    </section>
+
+    <section class="grid-two">
+      <article class="panel">
+        <h2>Irrigation Control</h2>
+        <div class="panel-row">
+          <button id="irrigationBtn" class="action off" type="button" aria-pressed="false">Pump OFF</button>
+          <div id="irrigationState" class="tag off">Inactive</div>
+        </div>
+        <div id="irrigationHint" class="subtle">Recommendation: waiting for sensor data…</div>
+        <div class="subtle" id="irrigationUpdated">Last action: --</div>
+      </article>
+
+      <article class="panel">
+        <h2>Alerts</h2>
+        <ul id="alerts" class="alerts">
+          <li class="ok">No alerts yet.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Device Health</h2>
+      <div class="health-grid">
+        <div class="health-card">
+          <div class="health-title">Sensor Gateway</div>
+          <div id="gatewayStatus" class="tag on">Online</div>
+          <div id="gatewayUpdated" class="subtle">Last update: --</div>
+        </div>
+        <div class="health-card">
+          <div class="health-title">Poultry Coop Door</div>
+          <div id="doorStatus" class="tag on">Closed</div>
+          <div id="doorUpdated" class="subtle">Last event: --</div>
+        </div>
+        <div class="health-card">
+          <div class="health-title">Security Camera</div>
+          <div id="cameraStatus" class="tag on">Online</div>
+          <div id="cameraUpdated" class="subtle">Last heartbeat: --</div>
+        </div>
+      </div>
     </section>
   </main>
 
-    <script src="app.js"></script>
-
+  <script src="app.js"></script>
 </body>
 </html>
